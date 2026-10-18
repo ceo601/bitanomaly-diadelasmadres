@@ -31,6 +31,9 @@ import {
   ARGENTINE_MOM_HUMOR_QUOTES,
   ARGENTINE_MOM_EMOTIONAL_QUOTES,
 } from './utils/videoLogic.ts';
+import { testFirestoreConnection } from './firebase/config.ts';
+import { CommunityReelsWall } from './components/CommunityReelsWall.tsx';
+import { SavedReel } from './firebase/reelsService.ts';
 
 // Frases típicas de Mamá Argentina
 export const FRASES_MAMA = [
@@ -82,9 +85,10 @@ export default function App() {
   const editorSectionRef = useRef<HTMLDivElement>(null);
   const timersRef = useRef<{ escena2?: NodeJS.Timeout; final?: NodeJS.Timeout }>({});
 
-  // Inicializar Web Audio Player
+  // Inicializar Web Audio Player y validar conexión Firestore
   useEffect(() => {
     audioPlayerRef.current = new VideoAudioPlayer();
+    testFirestoreConnection();
     return () => {
       audioPlayerRef.current?.stop();
     };
@@ -191,6 +195,25 @@ export default function App() {
   const handleLoadSamplePhotos = () => {
     setFotoReal(SAMPLE_PHOTO_MOTHER);
     showToast('¡Foto de muestra lista! Mirá el reel cómic');
+    setTimeout(() => {
+      iniciarVistaPrevia();
+      previewSectionRef.current?.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+    }, 150);
+  };
+
+  const handleLoadSavedReel = (reel: SavedReel) => {
+    setFraseActual(reel.humorQuote);
+    setEmotionalQuote(reel.emotionalQuote);
+    setMomName(reel.momName);
+    setSenderName(reel.authorName);
+    if (reel.frameStyle) setThemeId(reel.frameStyle);
+    if (reel.cartoonPose === 'sweater' || reel.cartoonPose === 'searching') {
+      setSelectedCartoonPose(reel.cartoonPose);
+    }
+    if (reel.photoUrl) {
+      setFotoReal(reel.photoUrl);
+    }
+    showToast(`¡Homenaje a ${reel.momName} cargado desde Firebase! 🎬`);
     setTimeout(() => {
       iniciarVistaPrevia();
       previewSectionRef.current?.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
@@ -466,6 +489,11 @@ export default function App() {
 
         </div>
 
+        {/* Muro Comunitario de Reels en Firebase */}
+        <div className="mt-14">
+          <CommunityReelsWall onLoadReel={handleLoadSavedReel} />
+        </div>
+
         {/* Sección de Costumbres y Consejos */}
         <section className="mt-14 pt-8 border-t-3 border-slate-900 grid grid-cols-1 md:grid-cols-3 gap-5">
           <div className="p-4 bg-yellow-100 border-3 border-slate-900 rounded-2xl shadow-comic-sm space-y-1.5">
@@ -509,6 +537,7 @@ export default function App() {
           themeId={themeId}
           audioTrack={audioPlayerRef.current?.getAudioStream() || null}
           onTriggerTransitionSFX={handleTriggerTransitionSFX}
+          onReelSavedToFirebase={() => showToast('¡Reel guardado con éxito en Firebase!')}
         />
       )}
 

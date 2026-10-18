@@ -1,0 +1,47 @@
+{
+  "entities": {
+    "User": {
+      "title": "User",
+      "description": "User profile information",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string", "description": "Unique user ID" },
+        "displayName": { "type": "string", "description": "User display name" },
+        "email": { "type": "string", "description": "User email address" },
+        "photoURL": { "type": "string", "description": "User avatar URL" },
+        "createdAt": { "type": "string", "description": "Creation timestamp" }
+      },
+      "required": ["id", "email", "createdAt"]
+    },
+    "Reel": {
+      "title": "Reel",
+      "description": "Mother tribute reel created by a user",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string", "description": "Unique reel ID" },
+        "userId": { "type": "string", "description": "Author UID" },
+        "authorName": { "type": "string", "description": "Author name" },
+        "momName": { "type": "string", "description": "Mother name" },
+        "humorQuote": { "type": "string", "description": "Selected Argentine humor quote" },
+        "emotionalQuote": { "type": "string", "description": "Heartwarming message" },
+        "frameStyle": { "type": "string", "description": "Comic frame style ID" },
+        "cartoonPose": { "type": "string", "description": "Cartoon pose key" },
+        "photoUrl": { "type": "string", "description": "Photo data URL or sample URL" },
+        "likesCount": { "type": "number", "description": "Count of likes received" },
+        "createdAt": { "type": "string", "description": "Creation timestamp" },
+        "isPublic": { "type": "boolean", "description": "Whether the reel is shared publicly" }
+      },
+      "required": ["id", "userId", "momName", "humorQuote", "emotionalQuote", "frameStyle", "createdAt"]
+    }
+  },
+  "firestore": {
+    "/users/{userId}": {
+      "schema": "User",
+      "description": "User profiles"
+    },
+    "/reels/{reelId}": {
+      "schema": "Reel",
+      "description": "User generated mother tribute reels"
+    }
+  }
+}
