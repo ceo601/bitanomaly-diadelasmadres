@@ -1,0 +1,6 @@
+{
+  "name": "Generador Video Día de la Madre 🇦🇷",
+  "description": "Crea reels y videos de homenaje para el Día de la Madre en Argentina en formato vertical 9:16 con transiciones suaves, música, dedicatorias personalizadas y exportación de video.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}

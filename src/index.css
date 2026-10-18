@@ -1,0 +1,182 @@
+@import "tailwindcss";
+
+@layer base {
+  body {
+    font-family: 'Fredoka', 'Plus Jakarta Sans', system-ui, -apple-system, sans-serif;
+  }
+}
+
+.font-comic {
+  font-family: 'Fredoka', cursive, sans-serif;
+}
+
+.font-sans-body {
+  font-family: 'Plus Jakarta Sans', system-ui, sans-serif;
+}
+
+/* Comic / Pop-Art Offset Shadows & Borders */
+.shadow-comic {
+  box-shadow: 4px 4px 0px #1e293b;
+}
+
+.shadow-comic-sm {
+  box-shadow: 2px 2px 0px #1e293b;
+}
+
+.shadow-comic-lg {
+  box-shadow: 6px 6px 0px #1e293b;
+}
+
+.shadow-comic-rose {
+  box-shadow: 4px 4px 0px #f43f5e;
+}
+
+.shadow-comic-yellow {
+  box-shadow: 4px 4px 0px #eab308;
+}
+
+/* Comic Speech Bubble with Tail */
+.comic-bubble {
+  position: relative;
+  border: 3px solid #0f172a;
+  border-radius: 18px;
+  background-color: #ffffff;
+  color: #0f172a;
+}
+
+.comic-bubble::after {
+  content: '';
+  position: absolute;
+  bottom: -14px;
+  left: 28px;
+  border-width: 14px 12px 0 0;
+  border-style: solid;
+  border-color: #ffffff transparent transparent transparent;
+  display: block;
+  width: 0;
+  z-index: 2;
+}
+
+.comic-bubble::before {
+  content: '';
+  position: absolute;
+  bottom: -18px;
+  left: 26px;
+  border-width: 16px 14px 0 0;
+  border-style: solid;
+  border-color: #0f172a transparent transparent transparent;
+  display: block;
+  width: 0;
+  z-index: 1;
+}
+
+/* Halftone dotted comic background */
+.bg-comic-dots {
+  background-image: radial-gradient(#cbd5e1 1.5px, transparent 1.5px);
+  background-size: 16px 16px;
+}
+
+.bg-comic-stripes {
+  background: repeating-linear-gradient(
+    45deg,
+    rgba(254, 243, 199, 0.4),
+    rgba(254, 243, 199, 0.4) 10px,
+    rgba(254, 240, 138, 0.4) 10px,
+    rgba(254, 240, 138, 0.4) 20px
+  );
+}
+
+/* Keyframe animations */
+@keyframes comicZoom {
+  from {
+    transform: scale(1);
+  }
+  to {
+    transform: scale(1.09);
+  }
+}
+
+@keyframes comicPopIn {
+  0% {
+    transform: scale(0.3) rotate(-6deg);
+    opacity: 0;
+  }
+  65% {
+    transform: scale(1.15) rotate(2deg);
+    opacity: 1;
+  }
+  85% {
+    transform: scale(0.95) rotate(-1deg);
+  }
+  100% {
+    transform: scale(1) rotate(0deg);
+    opacity: 1;
+  }
+}
+
+@keyframes comicBounce {
+  0%, 100% {
+    transform: translateY(0) scale(1);
+  }
+  50% {
+    transform: translateY(-6px) scale(1.05);
+  }
+}
+
+@keyframes comicWiggle {
+  0%, 100% {
+    transform: rotate(-3deg);
+  }
+  50% {
+    transform: rotate(3deg);
+  }
+}
+
+@keyframes heartFloatUp {
+  0% {
+    transform: translateY(0px) scale(0.8) rotate(0deg);
+    opacity: 0.95;
+  }
+  50% {
+    transform: translateY(-40px) scale(1.1) rotate(6deg);
+    opacity: 1;
+  }
+  100% {
+    transform: translateY(-90px) scale(0.9) rotate(-6deg);
+    opacity: 0;
+  }
+}
+
+.animate-comic-zoom {
+  animation: comicZoom 2.5s ease-out forwards;
+}
+
+.animate-pop {
+  animation: comicPopIn 0.6s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards;
+}
+
+.animate-comic-bounce {
+  animation: comicBounce 2s ease-in-out infinite;
+}
+
+.animate-comic-wiggle {
+  animation: comicWiggle 2.2s ease-in-out infinite;
+}
+
+.animate-float-heart {
+  animation: heartFloatUp 2.2s ease-out forwards;
+}
+
+/* Custom comic scrollbars */
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+::-webkit-scrollbar-track {
+  background: #fef3c7;
+}
+::-webkit-scrollbar-thumb {
+  background: #f43f5e;
+  border-radius: 9999px;
+  border: 2px solid #000;
+}
